@@ -3,6 +3,7 @@ package com.sknutti.popularmovies;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -58,11 +59,15 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) mMovieAdapter.getItem(position);
                 Uri uri = ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, cursor.getInt(MovieContract.MovieEntry.COL_MOVIE_ID));
+
+                Intent intent = new Intent(getActivity(), DetailActivity.class).setData(uri);
+                startActivity(intent);
+
                 // create fragment
-                DetailFragment detailFragment = DetailFragment.newInstance(uri);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, detailFragment)
-                        .addToBackStack(null).commit();
+//                DetailFragment detailFragment = DetailFragment.newInstance(uri);
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.fragment_container, detailFragment)
+//                        .addToBackStack(null).commit();
             }
         });
 
